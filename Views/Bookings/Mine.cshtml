@@ -1,0 +1,6 @@
+@model IEnumerable<Booking>
+@{ ViewData["Title"] = "My bookings"; }
+<section class="page-shell mine-page"><div class="page-heading"><span class="eyebrow">YOUR GETAWAYS</span><h1>My bookings</h1><p>All the stays you've got to look forward to.</p></div>
+@if (!Model.Any()) { <div class="empty-state"><span>✳</span><h2>No stays booked yet</h2><p>Your next favourite place is waiting.</p><a class="btn btn-dark" asp-controller="Home" asp-action="Index">Explore stays</a></div> }
+else { <div class="my-bookings-list">@foreach (var b in Model) { <article class="my-booking"><img src="@b.Room?.ImageUrl" alt="@b.Room?.Name"/><div class="my-booking-main"><span class="room-category">BOOKING SE-@b.Id.ToString("D6") · @b.Status.ToUpperInvariant()</span><h2>@b.Room?.Name</h2><p>@b.CheckIn.ToString("dd MMM yyyy") — @b.CheckOut.ToString("dd MMM yyyy") · @b.Nights night(s)</p><span class="my-booking-guests">@b.Guests guest(s) · @b.GuestName</span></div><div class="my-booking-price"><strong>₹@b.TotalPrice.ToString("N0")</strong><span>Total</span><a asp-action="Confirmation" asp-route-id="@b.Id">View details ↗</a></div></article> }</div> }
+</section>
